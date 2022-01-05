@@ -1,0 +1,58 @@
+#include<buts/stdc++.h>
+using namespace std;
+
+string encode(string src)
+{     
+  //Your code here 
+  string ans="";
+  int n=src.length();
+  int i=0;
+  int k=1;
+  if(n==1)
+  {
+      src=src+'1';
+      return src;
+  }
+  int j=1;
+  
+  for(int j=1;j<n;j++)
+  {
+      if(src[i]==src[j])
+      {
+          k++;
+      }
+      else if(src[j]!=src[i])
+      {
+          ans=ans+(src[i]);
+          ans=ans+(char)(k+'0');
+          i=j;
+          
+          k=1;
+      }
+      if(j==n-1)
+      {
+          ans=ans+src[i];
+          ans=ans+char(k+'0');
+          
+      }
+  }
+  return ans;
+}     
+ #include <bits/stdc++.h>
+using namespace std;
+
+string encode(string src);    
+ 
+int main() {
+	
+	int T;
+	cin>>T;
+	while(T--)
+	{
+		string str;
+		cin>>str;
+		
+		cout<<encode(str)<<endl;
+	}
+	return 0;
+}
