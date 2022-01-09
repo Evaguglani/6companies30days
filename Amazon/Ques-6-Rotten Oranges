@@ -1,0 +1,92 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        
+        queue<pair<int,int>> two;
+        set<pair<int,int>> one;
+        int ans=0;
+        int m=grid.size();          //row
+        int n=grid[0].size();   //column
+        int t[m][n];
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==2)
+                {
+                    two.push({i,j});
+                    t[i][j]=0;
+                }
+                else if(grid[i][j]==1)
+                {
+                    
+                    one.insert({i,j});
+                    t[i][j]=INT_MAX;
+                }
+                else if(grid[i][j]==0)
+                {
+                    t[i][j]=INT_MAX;
+                }
+            }
+        }
+    
+        
+        
+        while(!two.empty())
+        {
+                int a=two.front().first;
+                int b=two.front().second;
+                two.pop();
+                ans=max(ans,t[a][b]);
+
+                if(a>0)
+                {
+                    if(one.find({a-1,b})!=one.end())
+                   {
+                       two.push({a-1,b});
+                       one.erase(one.find({a-1,b}));
+                       t[a-1][b]=t[a][b]+1;
+                   }
+                }
+               if(b>0)
+               {
+                    if(one.find({a,b-1})!=one.end())
+                    {
+                        two.push({a,b-1});
+                        one.erase(one.find({a,b-1}));
+                        t[a][b-1]=t[a][b]+1;
+
+                    }
+               }
+               if(a<m-1)
+               {
+                    if(one.find({a+1,b})!=one.end())
+                    {
+                        two.push({a+1,b});
+                        one.erase(one.find({a+1,b}));
+                        t[a+1][b]=t[a][b]+1;
+                    }
+               }
+               if(b<n-1)
+               {
+                    if(one.find({a,b+1})!=one.end())
+                    {
+                        two.push({a,b+1});
+                        one.erase(one.find({a,b+1}));
+                        t[a][b+1]=t[a][b]+1;
+                    }
+               }
+
+
+
+            }
+       
+        
+        if(!one.empty())
+        {
+            return -1;
+        }
+        return ans;
+    }
+    
+};
