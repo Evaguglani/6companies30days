@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Solution{
+public:
+    int isValid(vector<vector<int>> mat){
+        // code here
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                
+                for(int k=0;k<9;k++)
+                {
+                    
+                    if(mat[k][j]==mat[i][j]&&k!=i&&mat[i][j]!=0)
+                    {
+                        return 0;
+                    }
+                }
+                for(int k=0;k<9;k++)
+                {
+                    if(mat[i][k]==mat[i][j]&&k!=j&&mat[i][j]!=0)
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+       
+        
+        for(int i=0;i<9;i+=3)
+        {
+            
+            for(int j=0;j<9;j+=3)
+            {
+                int a=i;
+                int b=j;
+                for(int z=1;z<=9;z++)
+                {
+                    int count=0;
+                    for(int l=a;l<a+3;l++)
+                    {
+                        for(int m=b;m<b+3;m++)
+                        {
+                            if(mat[l][m]==z)
+                            {
+                                count++;
+                                if(count>1)
+                                {
+                                    return 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            }
+        }
+    
+        return 1;
+    
+    }
+};
+int main()
+{
+  int t;
+  cin>>t;
+  while(t--)
+  {
+    vector<vector<int>> mat(9,vector<int>(9,0));
+    
+    for(int i=0;i<81;i++)
+    {
+      cin>>mat[i/9][i%9];
+      Solution ob;
+      cout<<ob.isValid<<mat<<"\n";
+    }
+
+  }
+  return 0;
+}
